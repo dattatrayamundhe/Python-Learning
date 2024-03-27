@@ -1,0 +1,236 @@
+#Lecture 25 : Mysql
+
+mysql> show databases;
+
+mysql> use employee
+
+mysql> show tables;
+
+mysql> select * from employe;
+
+mysql> select * from employe_info;
+
+mysql>  insert into employe values(6,"Gayatri Dinde","Frontend developer",65000,"Pune");
+
+mysql> insert into employe values(7,"Nisha Jagtap","Frontend developer",65000,"Pune");
+
+mysql> select * from employe;
+
+mysql> select elocation from employe group by elocation;
+
+mysql> select edesignation from employe group by edesignation;
+
+mysql> select * from employe where esalary > 50000;
+
+mysql> select * from employe where esalary > 40000 order by esalary;
+
+mysql> select * from employe where esalary > 40000 order by esalary desc;
+
+mysql> select * from employe where esalary > 40000 order by ename asc;
+
+mysql> select * from employe order by esalary;
+
+#Aggrigate function in mysql applied on only column
+1] min
+2] max
+3] sum
+4] avg
+5] count
+
+mysql> select max(esalary) from employe;
++--------------+
+| max(esalary) |
++--------------+
+|        80000 |
++--------------+
+1 row in set (0.01 sec)
+
+mysql> select max(esalary) as max_salary from employe;
++------------+
+| max_salary |
++------------+
+|      80000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select min(esalary) as Minimum from employe;
++---------+
+| Minimum |
++---------+
+|   35000 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select sum(esalary) as TOTAL from employe;
++--------+
+| TOTAL  |
++--------+
+| 383000 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select avg(esalary) as Average from employe;
++------------+
+| Average    |
++------------+
+| 54714.2857 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(eid) as Employees from employe;
++-----------+
+| Employees |
++-----------+
+|         7 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select count(elocation) as Employees from employe where elocation = "Pune";
++-----------+
+| Employees |
++-----------+
+|         3 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select elocation, count(elocation) as Employees from employe group by elocation;
+
++-----------+-----------+
+| elocation | Employees |
++-----------+-----------+
+| Banglore  |         1 |
+| Latur     |         1 |
+| Mumbai    |         1 |
+| Delhi     |         1 |
+| Pune      |         3 |
++-----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employe where esalary = ( select max(esalary) from employe );
++------+-------------------+-----------------------+---------+-----------+
+| eid  | ename             | edesignation          | esalary | elocation |
++------+-------------------+-----------------------+---------+-----------+
+|    1 | Nandan Kumar      | Open source developer |   80000 | Banglore  |
+|    2 | Dattatraya Mundhe | Open source developer |   80000 | Latur     |
++------+-------------------+-----------------------+---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employe where esalary = ( select max(esalary) from employe ) and elocation = "Latur" ;
++------+-------------------+-----------------------+---------+-----------+
+| eid  | ename             | edesignation          | esalary | elocation |
++------+-------------------+-----------------------+---------+-----------+
+|    2 | Dattatraya Mundhe | Open source developer |   80000 | Latur     |
++------+-------------------+-----------------------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from employe where ename like 'D%' ;
++------+-------------------+-----------------------+---------+-----------+
+| eid  | ename             | edesignation          | esalary | elocation |
++------+-------------------+-----------------------+---------+-----------+
+|    2 | Dattatraya Mundhe | Open source developer |   80000 | Latur     |
++------+-------------------+-----------------------+---------+-----------+
+1 row in set (0.01 sec)
+
+mysql> select * from employe where ename like 'G%' ;
++------+---------------+--------------------+---------+-----------+
+| eid  | ename         | edesignation       | esalary | elocation |
++------+---------------+--------------------+---------+-----------+
+|    6 | Gayatri Dinde | Frontend developer |   35000 | Pune      |
++------+---------------+--------------------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from employe where ename like 'p%' ;
++------+-----------------+--------------------+---------+-----------+
+| eid  | ename           | edesignation       | esalary | elocation |
++------+-----------------+--------------------+---------+-----------+
+|    5 | Poonam Kulkarni | Frontend developer |   40000 | Pune      |
++------+-----------------+--------------------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from employe where ename like '%a' ;
+Empty set (0.00 sec)
+
+mysql> select * from employe where ename like '%e' ;
++------+-------------------+-----------------------+---------+-----------+
+| eid  | ename             | edesignation          | esalary | elocation |
++------+-------------------+-----------------------+---------+-----------+
+|    2 | Dattatraya Mundhe | Open source developer |   80000 | Latur     |
+|    3 | Rohit Rambode     | Full stack developer  |   50000 | Mumbai    |
+|    6 | Gayatri Dinde     | Frontend developer    |   35000 | Pune      |
++------+-------------------+-----------------------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employe where ename like '%h_' ;
++------+-------------------+-----------------------+---------+-----------+
+| eid  | ename             | edesignation          | esalary | elocation |
++------+-------------------+-----------------------+---------+-----------+
+|    2 | Dattatraya Mundhe | Open source developer |   80000 | Latur     |
++------+-------------------+-----------------------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from employe where ename like '_a%' ;
++------+-------------------+-----------------------+---------+-----------+
+| eid  | ename             | edesignation          | esalary | elocation |
++------+-------------------+-----------------------+---------+-----------+
+|    1 | Nandan Kumar      | Open source developer |   80000 | Banglore  |
+|    2 | Dattatraya Mundhe | Open source developer |   80000 | Latur     |
+|    6 | Gayatri Dinde     | Frontend developer    |   35000 | Pune      |
++------+-------------------+-----------------------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employe where ename like '%y%' ;
++------+-------------------+-----------------------+---------+-----------+
+| eid  | ename             | edesignation          | esalary | elocation |
++------+-------------------+-----------------------+---------+-----------+
+|    2 | Dattatraya Mundhe | Open source developer |   80000 | Latur     |
+|    6 | Gayatri Dinde     | Frontend developer    |   35000 | Pune      |
++------+-------------------+-----------------------+---------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employe limit 3 ;
++------+-------------------+-----------------------+---------+-----------+
+| eid  | ename             | edesignation          | esalary | elocation |
++------+-------------------+-----------------------+---------+-----------+
+|    1 | Nandan Kumar      | Open source developer |   80000 | Banglore  |
+|    2 | Dattatraya Mundhe | Open source developer |   80000 | Latur     |
+|    3 | Rohit Rambode     | Full stack developer  |   50000 | Mumbai    |
++------+-------------------+-----------------------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employe limit 5;
++------+-------------------+-----------------------+---------+-----------+
+| eid  | ename             | edesignation          | esalary | elocation |
++------+-------------------+-----------------------+---------+-----------+
+|    1 | Nandan Kumar      | Open source developer |   80000 | Banglore  |
+|    2 | Dattatraya Mundhe | Open source developer |   80000 | Latur     |
+|    3 | Rohit Rambode     | Full stack developer  |   50000 | Mumbai    |
+|    4 | Kumbhaj Agrawal   | Backend developer     |   60000 | Delhi     |
+|    5 | Poonam Kulkarni   | Frontend developer    |   40000 | Pune      |
++------+-------------------+-----------------------+---------+-----------+
+5 rows in set (0.00 sec
+
+
+
+# Assignment 01
+
+Q.1]  To find all emp having esalary greater than avg salary.
+Q.2]  To find all record having esalary greater than avg salary, all emp came from pune, and all must be python developer.
+Q.3]  Display all record of emp having 2nd highest salary.
+Q.4]  Display all record of emp having 3rd highest salary.
+Q.5]  Display all record all are came from pune but not java developer
+Q.6]  Display all record having salary greater than rohit salary
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
