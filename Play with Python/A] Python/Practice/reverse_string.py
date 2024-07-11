@@ -6,3 +6,8 @@ a3 = a[3]
 a4 = a[4]
 #string is reversed
 print(f"Reverse string of {a} is",a4+a3+a2+a1+a0) 
+
+
+
+
+
