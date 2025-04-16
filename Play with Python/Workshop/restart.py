@@ -1,2 +1,5 @@
 print("I can do it")
 print("I can change my personality")
+print("Avoid distraction")
+print("Don't waste time, please!")
+print("Be disciplined and consistent, please!!!")
